@@ -2,6 +2,9 @@ package com.progVideosSQ.videos.services;
 
 import com.progVideosSQ.videos.entities.Base;
 import com.progVideosSQ.videos.repositories.BaseRepository;
+import jakarta.transaction.TransactionScoped;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -11,6 +14,7 @@ import java.util.Optional;
 public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> implements BaseService<E, ID> {
     protected BaseRepository<E,ID> baseRepository;
     public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
+
         this.baseRepository = baseRepository;
     }
     @Override
@@ -23,6 +27,19 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
+
+    @Override
+    @Transactional
+    public Page<E> findAll(Pageable pageable) throws Exception{
+        try {
+            Page<E> entities = baseRepository.findAll(pageable);
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
 
     @Override
     @Transactional

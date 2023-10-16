@@ -4,6 +4,7 @@ import com.progVideosSQ.videos.entities.Base;
 import com.progVideosSQ.videos.entities.Persona;
 import com.progVideosSQ.videos.services.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,18 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error por favor intente mas tarde.\"}");
         }
     }
+
+    @GetMapping("/paged")
+    public ResponseEntity<?> getAll(Pageable pageable){//nos brinda la respuesta en formato json para la app
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.findAll(pageable));
+            //si se encuentra se va a devolver la lista de personas y status ok
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error por favor intente mas tarde.\"}");
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){//la variable path es una que esta dentro del path o URL por lo cual se accede al recurso
         try{

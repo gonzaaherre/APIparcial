@@ -35,7 +35,7 @@ public class Persona extends Base {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)//cuando eliminemos a una persona eliminamos el libro
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)//cuando eliminemos a una persona eliminamos el libro
     @JoinTable(
             name = "persona_libro",
             joinColumns = @JoinColumn(name = "persona_id"),

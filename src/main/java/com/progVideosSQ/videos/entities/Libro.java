@@ -27,7 +27,7 @@ public class Libro extends Base{
     @Column(name = "titulo")
     private String titulo;
     @ManyToMany(cascade = CascadeType.REFRESH)
-    private List<Autor> autores= new ArrayList<Autor>();
+    private List<Autor> autores;
     
     
 }
